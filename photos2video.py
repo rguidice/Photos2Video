@@ -14,10 +14,17 @@ import cv2
 
 # Create argument parser and possible arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('-dir', '--directory', dest = 'dir', type = str, default = '.', help = 'Directory that image files are stored in. Can take both relative and absolute file paths. Default = current working directory.')
-parser.add_argument('-ext', '--extension', dest = 'ext', type = str, default = 'png', help = 'File extension of image files. Default = png.')
-parser.add_argument('-fr', '--framerate', dest = 'fr', type = int, default = 30, help = 'Frame rate of output video as int. Default = 30.')
-parser.add_argument('-out', '--output', dest = 'out', type = str, help = 'Output video file name. Can take both relative and absolute file paths.')
+parser.add_argument('-dir', '--directory', dest = 'dir', type = str,
+    default = '.', help = ('Directory that image files are stored in. Can take '
+    'both relative and absolute file paths. Default = current working '
+    'directory.'))
+parser.add_argument('-ext', '--extension', dest = 'ext', type = str,
+    default = 'png', help = 'File extension of image files. Default = png.')
+parser.add_argument('-fr', '--framerate', dest = 'fr', type = int,
+    default = 30, help = 'Frame rate of output video as int. Default = 30.')
+parser.add_argument('-out', '--output', dest = 'out', type = str,
+    help = ('Output video file name. Can take both relative and absolute file '
+    'paths.'))
 args = parser.parse_args()
 
 # Gather inputted arguments from argument parser
