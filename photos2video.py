@@ -5,7 +5,6 @@ import argparse
 import cv2
 
 ### TO-DO: ###
-#add argument for frame rate of output video
 #add default option of current directory to -dir argument
     #research how os deals with relative vs absolute file paths
 #research supported image file extensions and add them to help section
@@ -19,12 +18,14 @@ import cv2
 parser = argparse.ArgumentParser()
 parser.add_argument('-dir', '--directory', dest = 'dir', type = str, help = 'Directory that image files are stored in.')
 parser.add_argument('-ext', '--extension', dest = 'ext', type = str, help = 'File extension of image files.')
+parser.add_argument('-fr', '--framerate', dest = 'fr', type = int, default = 30, help = 'Frame rate of output video as int. Default = 30.')
 parser.add_argument('-out', '--output', dest = 'out', type = str, help = 'Output video file name.')
 args = parser.parse_args()
 
 # Gather inputted arguments from argument parser
 dir = args.dir
 ext = args.ext
+fr = args.fr
 output = args.out
 
 # Create list of images in directory with certain extension
@@ -43,7 +44,7 @@ height, width, layers = first_image.shape
 video_size = (width, height)
 
 # Create output cv2 VideoWriter
-out = cv2.VideoWriter(output, cv2.VideoWriter_fourcc(*'DIVX'), 10, video_size)
+out = cv2.VideoWriter(output, cv2.VideoWriter_fourcc(*'DIVX'), fr, video_size)
 
 # Write each image in the images array to the output video
 for i in images:
