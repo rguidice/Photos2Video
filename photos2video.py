@@ -17,7 +17,7 @@ import cv2
 # Create argument parser and possible arguments
 parser = argparse.ArgumentParser()
 parser.add_argument('-dir', '--directory', dest = 'dir', type = str, help = 'Directory that image files are stored in.')
-parser.add_argument('-ext', '--extension', dest = 'ext', type = str, help = 'File extension of image files.')
+parser.add_argument('-ext', '--extension', dest = 'ext', type = str, default = 'png', help = 'File extension of image files. Default = png.')
 parser.add_argument('-fr', '--framerate', dest = 'fr', type = int, default = 30, help = 'Frame rate of output video as int. Default = 30.')
 parser.add_argument('-out', '--output', dest = 'out', type = str, help = 'Output video file name.')
 args = parser.parse_args()
