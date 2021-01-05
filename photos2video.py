@@ -6,7 +6,15 @@ import cv2
 
 ### TODO: ###
 #research ways to deal with different sized images
-#support multiple output video extensions/codecs?
+    #make video size the size of largest image in array
+        #only do this if argument is provided for better performance
+#add in file extension to output argument if user doesn't
+
+# Error checking for codec argument parsing
+def codec_checker(arg):
+    if str(arg) not in ['DIVX', 'mp4v']:
+        raise argparse.ArgumentTypeError('Invalid codec argument.')
+    return str(arg)
 
 # Create argument parser and possible arguments
 parser = argparse.ArgumentParser()
@@ -19,6 +27,10 @@ parser.add_argument('-ext', '--extension', dest = 'ext', type = str,
     'extensions can be found in the OpenCV docs. Default = any.'))
 parser.add_argument('-fr', '--framerate', dest = 'fr', type = int,
     default = 30, help = 'Frame rate of output video as int. Default = 30.')
+parser.add_argument('-c', '--codec', dest = 'codec', type = codec_checker,
+    default = 'DIVX', help = ('Video codec of output file. Options are "DIVX" '
+    '(output extension of .avi) or "mp4v" (output extension of .mp4) Default '
+    '= DIVX.'))
 parser.add_argument('-out', '--output', dest = 'out', type = str,
     help = ('Output video file name. Can take both relative and absolute file '
     'paths.'))
@@ -28,6 +40,7 @@ args = parser.parse_args()
 dir = args.dir
 ext = args.ext
 fr = args.fr
+codec = args.codec
 output = args.out
 
 # Create list of images in directory with certain extension
@@ -53,7 +66,7 @@ height, width, layers = first_image.shape
 video_size = (width, height)
 
 # Create output cv2 VideoWriter
-out = cv2.VideoWriter(output, cv2.VideoWriter_fourcc(*'DIVX'), fr, video_size)
+out = cv2.VideoWriter(output, cv2.VideoWriter_fourcc(*str(codec)), fr, video_size)
 
 # Write each image in the images array to the output video
 for i in images:
