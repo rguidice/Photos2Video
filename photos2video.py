@@ -43,6 +43,14 @@ fr = args.fr
 codec = args.codec
 output = args.out
 
+# Add appropriate file extension if it wasn't provided
+if codec == 'DIVX':
+    if not output.endswith('.avi'):
+        output += '.avi'
+else:
+    if not output.endswith('.mp4'):
+        output += '.mp4'
+
 # Create list of images in directory with certain extension
 images = []
 for file in os.listdir(dir):
