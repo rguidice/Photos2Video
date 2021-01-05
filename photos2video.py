@@ -4,13 +4,9 @@ import os
 import argparse
 import cv2
 
-### TO-DO: ###
-#research supported image file extensions and add them to help section
-    #research ways to combine different types of image files into video
+### TODO: ###
 #research ways to deal with different sized images
 #support multiple output video extensions/codecs?
-#research industry standard way for these to-do lists
-#research version numbering/changelog industry standards
 
 # Create argument parser and possible arguments
 parser = argparse.ArgumentParser()
@@ -19,7 +15,8 @@ parser.add_argument('-dir', '--directory', dest = 'dir', type = str,
     'both relative and absolute file paths. Default = current working '
     'directory.'))
 parser.add_argument('-ext', '--extension', dest = 'ext', type = str,
-    default = 'png', help = 'File extension of image files. Default = png.')
+    default = 'any', help = ('File extension of image files. Supported '
+    'extensions can be found in the OpenCV docs. Default = any.'))
 parser.add_argument('-fr', '--framerate', dest = 'fr', type = int,
     default = 30, help = 'Frame rate of output video as int. Default = 30.')
 parser.add_argument('-out', '--output', dest = 'out', type = str,
@@ -36,8 +33,15 @@ output = args.out
 # Create list of images in directory with certain extension
 images = []
 for file in os.listdir(dir):
-    if file.endswith(ext):
-        images.append(file)
+    if ext == 'any':
+        ext_opts = ['bmp', 'dib', 'jpeg', 'jpg', 'JPG', 'jp2', 'png', 'webp', 'pbm',
+         'pgm', 'ppm' 'pxm', 'pnm', 'sr', 'ras', 'tiff', 'tif', 'exr', 'hdr',
+         'pic']
+        if file.endswith(tuple(ext_opts)):
+            images.append(file)
+    else:
+        if file.endswith(ext):
+            images.append(file)
 
 # Raise error if no images were found in the provided directory
 if len(images) == 0:
